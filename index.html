@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTFL Çalışma Sistemi</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:#f0f4f8; }
+        header { background-color:#004080; color:white; padding:20px; display:flex; align-items:center; gap:15px; }
+        header img { height:50px; }
+        nav { background-color:#0073e6; display:flex; justify-content:center; padding:10px 0; }
+        nav button { background-color:#0059b3; color:white; border:none; margin:0 10px; padding:10px 20px; border-radius:10px; cursor:pointer; font-size:16px; }
+        nav button:hover { background-color:#004080; }
+        .page { display:none; padding:30px; max-width:900px; margin:auto; }
+        .active { display:block; }
+        .class-selection, .section-grid { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:20px; }
+        .class-box, .section-box { background-color:#ffffff; padding:25px; border-radius:15px; width:200px; text-align:center; cursor:pointer; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition:transform 0.2s; }
+        .class-box:hover, .section-box:hover { transform:translateY(-5px); box-shadow:0 6px 10px rgba(0,0,0,0.15); }
+        iframe, video { width:100%; height:500px; margin-top:20px; }
+    </style>
+</head>
+<body>
+<header>
+    <img src="ttfl_logo.png" alt="TTFL Logo">
+    <h1>TTFL Çalışma Sistemi</h1>
+</header>
+<nav>
+    <button onclick="showPage('home')">Ana Sayfa</button>
+</nav>
+
+<!-- Ana Sayfa -->
+<div id="home" class="page active">
+    <h2>Okulumuzun Çalışma Sistemi</h2>
+    <p>Bu sistem ile 9, 10, 11 ve 12. sınıflar için ders çalışabilir, konu anlatımlarını inceleyebilir ve test çözebilirsiniz.</p>
+    <h3>Sınıflar</h3>
+    <div class="class-selection">
+        <div class="class-box" onclick="showPage('grade9')">9. Sınıf</div>
+        <div class="class-box" onclick="showPage('grade10')">10. Sınıf</div>
+        <div class="class-box" onclick="showPage('grade11')">11. Sınıf</div>
+        <div class="class-box" onclick="showPage('grade12')">12. Sınıf</div>
+    </div>
+    <h3>Amacımız</h3>
+    <p>Öğrencilerin derslerini daha sistemli ve eğlenceli bir şekilde takip edebilmeleri için hazırlanmıştır.</p>
+</div>
+
+<!-- Sınıf Sayfaları -->
+<div id="grade9" class="page">
+    <h2>9. Sınıf</h2>
+    <div class="section-grid">
+        <div class="section-box" onclick="showSection('9','konu')">Konu Anlatımları</div>
+        <div class="section-box" onclick="showSection('9','test')">Testler</div>
+        <div class="section-box" onclick="showSection('9','yazili')">Yazılıya Hazırlık</div>
+        <div class="section-box" onclick="showSection('9','not')">Notlar</div>
+    </div>
+    <div id="content9" style="margin-top:20px;"></div>
+</div>
+<div id="grade10" class="page">
+    <h2>10. Sınıf</h2>
+    <div class="section-grid">
+        <div class="section-box" onclick="showSection('10','konu')">Konu Anlatımları</div>
+        <div class="section-box" onclick="showSection('10','test')">Testler</div>
+        <div class="section-box" onclick="showSection('10','yazili')">Yazılıya Hazırlık</div>
+        <div class="section-box" onclick="showSection('10','not')">Notlar</div>
+    </div>
+    <div id="content10" style="margin-top:20px;"></div>
+</div>
+<div id="grade11" class="page">
+    <h2>11. Sınıf</h2>
+    <div class="section-grid">
+        <div class="section-box" onclick="showSection('11','konu')">Konu Anlatımları</div>
+        <div class="section-box" onclick="showSection('11','test')">Testler</div>
+        <div class="section-box" onclick="showSection('11','yazili')">Yazılıya Hazırlık</div>
+        <div class="section-box" onclick="showSection('11','not')">Notlar</div>
+    </div>
+    <div id="content11" style="margin-top:20px;"></div>
+</div>
+<div id="grade12" class="page">
+    <h2>12. Sınıf</h2>
+    <div class="section-grid">
+        <div class="section-box" onclick="showSection('12','konu')">Konu Anlatımları</div>
+        <div class="section-box" onclick="showSection('12','test')">Testler</div>
+        <div class="section-box" onclick="showSection('12','yazili')">Yazılıya Hazırlık</div>
+        <div class="section-box" onclick="showSection('12','not')">Notlar</div>
+    </div>
+    <div id="content12" style="margin-top:20px;"></div>
+</div>
+
+<script>
+function showPage(pageId){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+}
+
+// Buraya GitHub raw linklerini ekle
+const githubFiles=[
+  'https://raw.githubusercontent.com/kullanici/TTFL_Calisma_Sistemi/main/dosyalar/test9.pdf',
+  'https://raw.githubusercontent.com/kullanici/TTFL_Calisma_Sistemi/main/dosyalar/yazılıyahazırlık11.pdf',
+  'https://raw.githubusercontent.com/kullanici/TTFL_Calisma_Sistemi/main/dosyalar/İklimSistemi9.mp4'
+];
+
+let fileData=[];
+
+githubFiles.forEach(file=>{
+    const fileName=file.split('/').pop();
+    const match=fileName.match(/([a-zA-ZçğıöşüÇĞİÖŞÜ]+)(\d+)\.(pdf|mp4)/);
+    if(match){
+        const type=match[1].toLowerCase();
+        const grade=match[2];
+        const ext=match[3];
+        let title='';
+        if(ext==='mp4') title=match[1].replace(/[0-9]/g,'');
+        else title=type.charAt(0).toUpperCase()+type.slice(1)+' '+Math.floor(Math.random()*100);
+        fileData.push({file,type,grade,ext,title});
+    }
+});
+
+function showSection(grade,section){
+    const container=document.getElementById('content'+grade);
+    container.innerHTML='';
+    fileData.filter(f=>f.grade===grade && 
+        ((section==='konu' && f.ext==='mp4') ||
+         (section==='test' && f.type==='test') ||
+         (section==='yazili' && f.type==='yazılıyahazırlık') ||
+         (section==='not' && f.type==='not')))
+    .forEach((f,i)=>{
+        const box=document.createElement('div');
+        box.className='section-box';
+        box.textContent=f.title;
+        box.onclick=()=>openContent(f.file,f.ext);
+        container.appendChild(box);
+    });
+}
+
+function openContent(file,type){
+    const newWindow=window.open('','_blank');
+    if(type==='pdf') newWindow.document.write('<iframe src="'+file+'" frameborder="0"></iframe>');
+    else if(type==='mp4') newWindow.document.write('<video controls><source src="'+file+'" type="video/mp4"></video>');
+}
+</script>
+</body>
+</html>
